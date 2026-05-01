@@ -12,6 +12,8 @@
   <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License"/>
 </p>
 
+![Dashboard hero](docs/hero.png)
+
 ---
 
 ## ✨ What it does
@@ -20,6 +22,12 @@
 - **Returns answers with page-level citations** — every claim is tagged `[Apple_10K p.47]` so users can verify against the original PDF
 - **Two-stage faithfulness guardrail** — extracts atomic claims from the answer, then judges each one against the retrieved context. Score below 0.6 → block. 0.6–0.85 → flag. Above 0.85 → green.
 - **Ships as both a Gradio UI and a FastAPI service** — same pipeline, two deployment surfaces
+
+### Cross-document Q&A in action
+
+![Comparing Apple and NVIDIA gross margins](docs/comparison.png)
+
+Citations visibly mix `[Apple_10K]` and `[NVIDIA_10K]` — proof that the retriever is correctly combining sources, not anchoring to one document.
 
 ## 🏗️ Architecture
 
@@ -143,6 +151,7 @@ Three thresholds (configurable via `.env`):
 - **`red`** < 0.6 — answer **blocked**, replaced with a transparent refusal
 
 The UI shows the score, the verdict banner, and a per-claim breakdown so users can see exactly which claim was unsupported. This is what makes the guardrail actionable instead of decorative.
+![Per-claim breakdown showing yes/partial verdicts](docs/faithfulness-breakdown.png)
 
 ## 🧰 Tech stack
 
